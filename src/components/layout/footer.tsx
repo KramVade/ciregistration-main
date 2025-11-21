@@ -4,7 +4,7 @@ export function Footer() {
       <div className="container flex flex-col items-center justify-center gap-4 h-24 md:flex-row">
         <p className="text-balance text-center text-sm leading-loose text-muted-foreground">
           &copy; {new Date().getFullYear()} Christmas Institute. All rights
-          reserved. No coal for you.
+          reserved. Si Kristo Higit sa Lahat!
         </p>
       </div>
     </footer>
