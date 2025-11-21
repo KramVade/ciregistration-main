@@ -12,30 +12,34 @@ const loginSchema = z.object({
 
 const registrationSchema = z.object({
   pangalan: z.string().min(2, "Kinakailangan ang buong pangalan."),
+  email: z.string().email("Kinakailangan ang valid na email address."),
   palayaw: z.string().min(2, "Kinakailangan ang palayaw."),
+  kaarawan: z.string().min(1, "Kinakailangan ang kaarawan."),
   edad: z.string().min(1, "Kinakailangan ang edad."),
   kasarian: z.enum(["Lalaki", "Babae"]),
+  tirahan: z.string().min(5, "Kinakailangan ang tirahan."),
   contactNumber: z.string().min(10, "Kinakailangan ang contact number."),
+  inabot: z.string().min(2, "Kinakailangan ang inabot na pag-aaral."),
+  tatay: z.string().min(2, "Kinakailangan ang pangalan ng tatay."),
+  nanay: z.string().min(2, "Kinakailangan ang pangalan ng nanay."),
   localChurch: z.string().min(2, "Kinakailangan ang lokal na simbahan."),
   kasapian: z.enum(["Baptized", "Professing"]),
-  ilangBeses: z
-    .string()
-    .min(1, "Kinakailangan ang sagot kung ilang beses nang nakadalo."),
+  posisyonIglesya: z.string().optional(),
+  posisyonOrganisasyon: z.string().optional(),
+  ilangBeses: z.string().min(1, "Kinakailangan ang sagot kung ilang beses nang nakadalo."),
   mgaInaasahan: z.string().min(5, "Kinakailangan ang iyong mga inaasahan."),
+  ambagCash: z.string().optional(),
+  ambagRice: z.string().optional(),
+  ambagInKinds: z.string().optional(),
+  plato: z.string().optional(),
+  kutsara: z.string().optional(),
+  baso: z.string().optional(),
+  beddings: z.string().optional(),
 });
 
 type State = {
   errors?: {
     [key: string]: string[] | undefined;
-    pangalan?: string[];
-    palayaw?: string[];
-    edad?: string[];
-    kasarian?: string[];
-    contactNumber?: string[];
-    localChurch?: string[];
-    kasapian?: string[];
-    ilangBeses?: string[];
-    mgaInaasahan?: string[];
   };
   message?: string | null;
 };
@@ -99,14 +103,29 @@ export async function registerForInstitute(
 ): Promise<State> {
   const validatedFields = registrationSchema.safeParse({
     pangalan: formData.get("pangalan"),
+    email: formData.get("email"),
     palayaw: formData.get("palayaw"),
+    kaarawan: formData.get("kaarawan"),
     edad: formData.get("edad"),
     kasarian: formData.get("kasarian"),
+    tirahan: formData.get("tirahan"),
     contactNumber: formData.get("contactNumber"),
+    inabot: formData.get("inabot"),
+    tatay: formData.get("tatay"),
+    nanay: formData.get("nanay"),
     localChurch: formData.get("localChurch"),
     kasapian: formData.get("kasapian"),
+    posisyonIglesya: formData.get("posisyonIglesya"),
+    posisyonOrganisasyon: formData.get("posisyonOrganisasyon"),
     ilangBeses: formData.get("ilangBeses"),
     mgaInaasahan: formData.get("mgaInaasahan"),
+    ambagCash: formData.get("ambagCash"),
+    ambagRice: formData.get("ambagRice"),
+    ambagInKinds: formData.get("ambagInKinds"),
+    plato: formData.get("plato"),
+    kutsara: formData.get("kutsara"),
+    baso: formData.get("baso"),
+    beddings: formData.get("beddings"),
   });
 
   if (!validatedFields.success) {

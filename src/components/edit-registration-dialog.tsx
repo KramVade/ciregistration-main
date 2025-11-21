@@ -17,14 +17,29 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 type Registration = {
   id: string;
   pangalan: string;
+  email: string;
   palayaw: string;
+  kaarawan: string;
   edad: string;
   kasarian: string;
+  tirahan: string;
   contactNumber: string;
+  inabot: string;
+  tatay: string;
+  nanay: string;
   localChurch: string;
   kasapian: string;
+  posisyonIglesya?: string;
+  posisyonOrganisasyon?: string;
   ilangBeses: string;
   mgaInaasahan: string;
+  ambagCash?: string;
+  ambagRice?: string;
+  ambagInKinds?: string;
+  plato?: string;
+  kutsara?: string;
+  baso?: string;
+  beddings?: string;
 };
 
 type EditRegistrationDialogProps = {
@@ -42,14 +57,29 @@ export function EditRegistrationDialog({
 }: EditRegistrationDialogProps) {
   const [formData, setFormData] = useState<Omit<Registration, "id">>({
     pangalan: "",
+    email: "",
     palayaw: "",
+    kaarawan: "",
     edad: "",
     kasarian: "Lalaki",
+    tirahan: "",
     contactNumber: "",
+    inabot: "",
+    tatay: "",
+    nanay: "",
     localChurch: "",
     kasapian: "Baptized",
+    posisyonIglesya: "",
+    posisyonOrganisasyon: "",
     ilangBeses: "",
     mgaInaasahan: "",
+    ambagCash: "",
+    ambagRice: "",
+    ambagInKinds: "",
+    plato: "",
+    kutsara: "",
+    baso: "",
+    beddings: "",
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -57,14 +87,29 @@ export function EditRegistrationDialog({
     if (registration) {
       setFormData({
         pangalan: registration.pangalan,
+        email: registration.email,
         palayaw: registration.palayaw,
+        kaarawan: registration.kaarawan,
         edad: registration.edad,
         kasarian: registration.kasarian,
+        tirahan: registration.tirahan,
         contactNumber: registration.contactNumber,
+        inabot: registration.inabot,
+        tatay: registration.tatay,
+        nanay: registration.nanay,
         localChurch: registration.localChurch,
         kasapian: registration.kasapian,
+        posisyonIglesya: registration.posisyonIglesya,
+        posisyonOrganisasyon: registration.posisyonOrganisasyon,
         ilangBeses: registration.ilangBeses,
         mgaInaasahan: registration.mgaInaasahan,
+        ambagCash: registration.ambagCash,
+        ambagRice: registration.ambagRice,
+        ambagInKinds: registration.ambagInKinds,
+        plato: registration.plato,
+        kutsara: registration.kutsara,
+        baso: registration.baso,
+        beddings: registration.beddings,
       });
     }
   }, [registration]);

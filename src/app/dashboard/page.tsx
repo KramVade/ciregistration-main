@@ -8,7 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { collection, getDocs, query, orderBy, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { EditRegistrationDialog } from "@/components/edit-registration-dialog";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Eye } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,14 +30,29 @@ import { useToast } from "@/hooks/use-toast";
 type Registration = {
   id: string;
   pangalan: string;
+  email: string;
   palayaw: string;
+  kaarawan: string;
   edad: string;
   kasarian: string;
+  tirahan: string;
   contactNumber: string;
+  inabot: string;
+  tatay: string;
+  nanay: string;
   localChurch: string;
   kasapian: string;
+  posisyonIglesya?: string;
+  posisyonOrganisasyon?: string;
   ilangBeses: string;
   mgaInaasahan: string;
+  ambagCash?: string;
+  ambagRice?: string;
+  ambagInKinds?: string;
+  plato?: string;
+  kutsara?: string;
+  baso?: string;
+  beddings?: string;
 };
 
 export default function DashboardPage() {
@@ -42,6 +63,7 @@ export default function DashboardPage() {
   const [loadingData, setLoadingData] = useState(true);
   const [editingRegistration, setEditingRegistration] = useState<Registration | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [viewingRegistration, setViewingRegistration] = useState<Registration | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -177,16 +199,17 @@ export default function DashboardPage() {
             <p className="text-muted-foreground">No registrations yet.</p>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b">
                     <th className="text-left p-2">Pangalan</th>
+                    <th className="text-left p-2">Email</th>
                     <th className="text-left p-2">Palayaw</th>
                     <th className="text-left p-2">Edad</th>
-                    <th className="text-left p-2">Kasarian</th>
                     <th className="text-left p-2">Contact</th>
                     <th className="text-left p-2">Local Church</th>
                     <th className="text-left p-2">Kasapian</th>
+                    <th className="text-left p-2">Ambag</th>
                     <th className="text-left p-2">Actions</th>
                   </tr>
                 </thead>
@@ -194,9 +217,9 @@ export default function DashboardPage() {
                   {registrations.map((reg) => (
                     <tr key={reg.id} className="border-b hover:bg-muted/50">
                       <td className="p-2">{reg.pangalan}</td>
+                      <td className="p-2">{reg.email}</td>
                       <td className="p-2">{reg.palayaw}</td>
                       <td className="p-2">{reg.edad}</td>
-                      <td className="p-2">{reg.kasarian}</td>
                       <td className="p-2">{reg.contactNumber}</td>
                       <td className="p-2">{reg.localChurch}</td>
                       <td className="p-2">
@@ -209,11 +232,27 @@ export default function DashboardPage() {
                         </span>
                       </td>
                       <td className="p-2">
+                        <div className="text-xs">
+                          {reg.ambagCash && <div>₱{reg.ambagCash}</div>}
+                          {reg.ambagRice && <div>{reg.ambagRice}kg</div>}
+                          {reg.ambagInKinds && <div className="text-muted-foreground">{reg.ambagInKinds}</div>}
+                        </div>
+                      </td>
+                      <td className="p-2">
                         <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setViewingRegistration(reg)}
+                            title="View Details"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => setEditingRegistration(reg)}
+                            title="Edit"
                           >
                             <Pencil className="h-4 w-4" />
                           </Button>
@@ -221,6 +260,7 @@ export default function DashboardPage() {
                             size="sm"
                             variant="destructive"
                             onClick={() => setDeletingId(reg.id)}
+                            title="Delete"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -261,6 +301,83 @@ export default function DashboardPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={!!viewingRegistration} onOpenChange={(open) => !open && setViewingRegistration(null)}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Registration Details</DialogTitle>
+          </DialogHeader>
+          {viewingRegistration && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Personal Information</h3>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div><span className="font-medium">Pangalan:</span> {viewingRegistration.pangalan}</div>
+                  <div><span className="font-medium">Email:</span> {viewingRegistration.email}</div>
+                  <div><span className="font-medium">Palayaw:</span> {viewingRegistration.palayaw}</div>
+                  <div><span className="font-medium">Kaarawan:</span> {viewingRegistration.kaarawan}</div>
+                  <div><span className="font-medium">Edad:</span> {viewingRegistration.edad}</div>
+                  <div><span className="font-medium">Kasarian:</span> {viewingRegistration.kasarian}</div>
+                  <div className="col-span-2"><span className="font-medium">Tirahan:</span> {viewingRegistration.tirahan}</div>
+                  <div><span className="font-medium">Contact:</span> {viewingRegistration.contactNumber}</div>
+                  <div><span className="font-medium">Pag-aaral:</span> {viewingRegistration.inabot}</div>
+                  <div><span className="font-medium">Tatay:</span> {viewingRegistration.tatay}</div>
+                  <div><span className="font-medium">Nanay:</span> {viewingRegistration.nanay}</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Church Information</h3>
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div><span className="font-medium">Local Church:</span> {viewingRegistration.localChurch}</div>
+                  <div><span className="font-medium">Kasapian:</span> {viewingRegistration.kasapian}</div>
+                  <div><span className="font-medium">Posisyon (Iglesya):</span> {viewingRegistration.posisyonIglesya || "N/A"}</div>
+                  <div><span className="font-medium">Posisyon (Org):</span> {viewingRegistration.posisyonOrganisasyon || "N/A"}</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Event Information</h3>
+                <div className="space-y-2 text-sm">
+                  <div><span className="font-medium">Ilang Beses:</span> {viewingRegistration.ilangBeses}</div>
+                  <div><span className="font-medium">Mga Inaasahan:</span> {viewingRegistration.mgaInaasahan}</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Ambag (Contribution)</h3>
+                <div className="grid grid-cols-3 gap-3 text-sm">
+                  <div><span className="font-medium">Cash:</span> {viewingRegistration.ambagCash ? `₱${viewingRegistration.ambagCash}` : "N/A"}</div>
+                  <div><span className="font-medium">Rice:</span> {viewingRegistration.ambagRice ? `${viewingRegistration.ambagRice} kg` : "N/A"}</div>
+                  <div className="col-span-3"><span className="font-medium">In-Kinds:</span> {viewingRegistration.ambagInKinds || "N/A"}</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Mga Gamit na Dala</h3>
+                <div className="flex gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" checked={viewingRegistration.plato === "true"} disabled className="h-4 w-4" />
+                    <span>Plato</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" checked={viewingRegistration.kutsara === "true"} disabled className="h-4 w-4" />
+                    <span>Kutsara</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" checked={viewingRegistration.baso === "true"} disabled className="h-4 w-4" />
+                    <span>Baso</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" checked={viewingRegistration.beddings === "true"} disabled className="h-4 w-4" />
+                    <span>Beddings</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
