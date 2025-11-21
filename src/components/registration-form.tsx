@@ -18,6 +18,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { registerForInstitute } from "@/app/actions";
 
@@ -389,9 +396,35 @@ export function RegistrationForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Ilang beses nang dumadalo sa gawaing ito?</FormLabel>
-                <FormControl>
-                  <Input placeholder="Hal. Una, Pangalawa, Pangatlo" {...field} />
-                </FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pumili ng bilang" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Una">Una (1st time)</SelectItem>
+                    <SelectItem value="Pangalawa">Pangalawa (2nd time)</SelectItem>
+                    <SelectItem value="Pangatlo">Pangatlo (3rd time)</SelectItem>
+                    <SelectItem value="Pang-apat">Pang-apat (4th time)</SelectItem>
+                    <SelectItem value="Pang-lima">Pang-lima (5th time)</SelectItem>
+                    <SelectItem value="Pang-anim">Pang-anim (6th time)</SelectItem>
+                    <SelectItem value="Pang-pito">Pang-pito (7th time)</SelectItem>
+                    <SelectItem value="Pang-walo">Pang-walo (8th time)</SelectItem>
+                    <SelectItem value="Pang-siyam">Pang-siyam (9th time)</SelectItem>
+                    <SelectItem value="Pang-sampu">Pang-sampu (10th time)</SelectItem>
+                    <SelectItem value="Pang-11">Pang-11 (11th time)</SelectItem>
+                    <SelectItem value="Pang-12">Pang-12 (12th time)</SelectItem>
+                    <SelectItem value="Pang-13">Pang-13 (13th time)</SelectItem>
+                    <SelectItem value="Pang-14">Pang-14 (14th time)</SelectItem>
+                    <SelectItem value="Pang-15">Pang-15 (15th time)</SelectItem>
+                    <SelectItem value="Pang-16">Pang-16 (16th time)</SelectItem>
+                    <SelectItem value="Pang-17">Pang-17 (17th time)</SelectItem>
+                    <SelectItem value="Pang-18">Pang-18 (18th time)</SelectItem>
+                    <SelectItem value="Pang-19">Pang-19 (19th time)</SelectItem>
+                    <SelectItem value="Pang-20">Pang-20 (20th time)</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
