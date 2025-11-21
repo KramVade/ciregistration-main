@@ -14,13 +14,13 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-white/30" />
       <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-foreground p-4">
         <div className="max-w-4xl mx-auto">
-          <p className="text-lg md:text-xl font-semibold tracking-wider">
+          <p className="text-lg md:text-xl font-koumon font-black tracking-wider" style={{ fontWeight: 900 }}>
             CHRISTMAS INSTITUTE 2025
           </p>
-          <h1 className="text-6xl md:text-8xl font-headline font-bold my-4">
+          <h1 className="text-6xl md:text-8xl font-koumon font-black my-4" style={{ fontWeight: 900 }}>
             BANYUHAY
           </h1>
-          <p className="text-2xl md:text-3xl font-headline italic mb-8">
+          <p className="text-2xl md:text-3xl font-koumon font-bold italic mb-8" style={{ fontWeight: 500 }}>
             Bagong Anyo ng Buhay
           </p>
           <blockquote className="max-w-2xl mx-auto text-base md:text-lg italic border-l-4 border-foreground pl-4 text-left">

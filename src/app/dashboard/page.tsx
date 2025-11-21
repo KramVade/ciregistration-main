@@ -373,8 +373,8 @@ export default function DashboardPage() {
                       </td>
                       <td className="p-2">
                         <div className="text-xs">
-                          {reg.ambagCash && <div>₱{reg.ambagCash}</div>}
-                          {reg.ambagRice && <div>{reg.ambagRice}kg</div>}
+                          {reg.ambagCash && <div>Reg: ₱{reg.ambagCash}</div>}
+                          {reg.ambagRice && <div>Bigas: {reg.ambagRice}kg</div>}
                           {reg.ambagInKinds && <div className="text-muted-foreground">{reg.ambagInKinds}</div>}
                         </div>
                       </td>

@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 93.5%;
+    --background: 60 100% 97.1%;
     --foreground: 224 76% 15%;
     --card: 0 0% 93.5%;
     --card-foreground: 224 76% 15%;
@@ -48,6 +48,22 @@
   }
 }
 
+@font-face {
+  font-family: 'Koumon';
+  src: url('/font/KoumonMedium-vmoWO.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Koumon';
+  src: url('/font/KoumonBlack-YzjDv.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -58,4 +74,8 @@
   html {
     @apply scroll-smooth;
   }
+}
+
+.font-koumon {
+  font-family: 'Koumon', 'Playfair Display', serif;
 }
