@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { collection, getDocs, query, orderBy, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { EditRegistrationDialog } from "@/components/edit-registration-dialog";
-import { Pencil, Trash2, Eye } from "lucide-react";
+import { Pencil, Trash2, Eye, Download } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -53,6 +53,7 @@ type Registration = {
   kutsara?: string;
   baso?: string;
   beddings?: string;
+  paymentStatus?: string;
 };
 
 export default function DashboardPage() {
@@ -130,6 +131,118 @@ export default function DashboardPage() {
     }
   };
 
+  const handleTogglePayment = async (id: string, currentStatus?: string) => {
+    try {
+      const newStatus = currentStatus === "paid" ? "unpaid" : "paid";
+      await updateDoc(doc(db, "registrations", id), { paymentStatus: newStatus });
+      toast({
+        title: "Success",
+        description: `Payment status updated to ${newStatus}!`,
+      });
+      fetchRegistrations();
+    } catch (error) {
+      console.error("Error updating payment:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update payment status.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const exportToCSV = () => {
+    if (registrations.length === 0) {
+      toast({
+        title: "No Data",
+        description: "There are no registrations to export.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Define CSV headers
+    const headers = [
+      "Pangalan",
+      "Email",
+      "Palayaw",
+      "Kaarawan",
+      "Edad",
+      "Kasarian",
+      "Tirahan",
+      "Contact Number",
+      "Inabot na Pag-aaral",
+      "Tatay",
+      "Nanay",
+      "Local Church",
+      "Kasapian",
+      "Posisyon (Iglesya)",
+      "Posisyon (Organisasyon)",
+      "Ilang Beses",
+      "Mga Inaasahan",
+      "Ambag Cash",
+      "Ambag Rice",
+      "Ambag In-Kinds",
+      "Plato",
+      "Kutsara",
+      "Baso",
+      "Beddings",
+      "Payment Status",
+    ];
+
+    // Convert registrations to CSV rows
+    const rows = registrations.map((reg) => [
+      reg.pangalan,
+      reg.email,
+      reg.palayaw,
+      reg.kaarawan,
+      reg.edad,
+      reg.kasarian,
+      reg.tirahan,
+      reg.contactNumber,
+      reg.inabot,
+      reg.tatay,
+      reg.nanay,
+      reg.localChurch,
+      reg.kasapian,
+      reg.posisyonIglesya || "",
+      reg.posisyonOrganisasyon || "",
+      reg.ilangBeses,
+      reg.mgaInaasahan,
+      reg.ambagCash || "",
+      reg.ambagRice || "",
+      reg.ambagInKinds || "",
+      reg.plato === "true" ? "Yes" : "No",
+      reg.kutsara === "true" ? "Yes" : "No",
+      reg.baso === "true" ? "Yes" : "No",
+      reg.beddings === "true" ? "Yes" : "No",
+      reg.paymentStatus === "paid" ? "Paid" : "Unpaid",
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) =>
+        row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")
+      ),
+    ].join("\n");
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `registrations_${new Date().toISOString().split("T")[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Success",
+      description: "Registrations exported successfully!",
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -149,18 +262,34 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold">Officer Dashboard</h1>
           <p className="text-muted-foreground">Welcome, {user.email}</p>
         </div>
-        <Button onClick={logout} variant="outline">
-          Logout
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={exportToCSV} variant="outline">
+            <Download className="h-4 w-4 mr-2" />
+            Export to CSV
+          </Button>
+          <Button onClick={logout} variant="outline">
+            Logout
+          </Button>
+        </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3 mb-6">
+      <div className="grid gap-4 md:grid-cols-4 mb-6">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium">Total Registrations</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{registrations.length}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium">Paid</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">
+              {registrations.filter(r => r.paymentStatus === "paid").length}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -209,6 +338,7 @@ export default function DashboardPage() {
                     <th className="text-left p-2">Contact</th>
                     <th className="text-left p-2">Local Church</th>
                     <th className="text-left p-2">Kasapian</th>
+                    <th className="text-left p-2">Payment</th>
                     <th className="text-left p-2">Ambag</th>
                     <th className="text-left p-2">Actions</th>
                   </tr>
@@ -230,6 +360,16 @@ export default function DashboardPage() {
                         }`}>
                           {reg.kasapian}
                         </span>
+                      </td>
+                      <td className="p-2">
+                        <Button
+                          size="sm"
+                          variant={reg.paymentStatus === "paid" ? "default" : "outline"}
+                          className={reg.paymentStatus === "paid" ? "bg-green-600 hover:bg-green-700" : ""}
+                          onClick={() => handleTogglePayment(reg.id, reg.paymentStatus)}
+                        >
+                          {reg.paymentStatus === "paid" ? "Paid" : "Unpaid"}
+                        </Button>
                       </td>
                       <td className="p-2">
                         <div className="text-xs">
@@ -341,6 +481,16 @@ export default function DashboardPage() {
                 <div className="space-y-2 text-sm">
                   <div><span className="font-medium">Ilang Beses:</span> {viewingRegistration.ilangBeses}</div>
                   <div><span className="font-medium">Mga Inaasahan:</span> {viewingRegistration.mgaInaasahan}</div>
+                  <div>
+                    <span className="font-medium">Payment Status:</span>{" "}
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      viewingRegistration.paymentStatus === "paid"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}>
+                      {viewingRegistration.paymentStatus === "paid" ? "Paid" : "Unpaid"}
+                    </span>
+                  </div>
                 </div>
               </div>
 

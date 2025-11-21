@@ -424,7 +424,7 @@ export function RegistrationForm() {
               name="ambagCash"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cash (in PHP)</FormLabel>
+                  <FormLabel>Registration Fee (in PHP)</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="0" {...field} />
                   </FormControl>
