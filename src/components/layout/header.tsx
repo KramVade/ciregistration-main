@@ -20,18 +20,18 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b-2 border-border/40 bg-background/98 backdrop-blur-md shadow-sm">
       <div className="container flex h-24 md:h-28 items-center px-4 md:px-6">
-        <Link href="/" className="mr-8 flex items-center space-x-3 group">
-          <div className="relative">
+        <Link href="/" className="mr-4 md:mr-8 flex items-center space-x-2 md:space-x-3 group flex-shrink-0">
+          <div className="relative flex-shrink-0">
             <Image 
               src={logo} 
               alt="Christmas Institute Logo" 
               width={56} 
               height={56} 
-              className="h-12 w-12 md:h-14 md:w-14 transition-transform group-hover:scale-105" 
+              className="h-10 w-10 md:h-14 md:w-14 object-contain transition-transform group-hover:scale-105" 
             />
           </div>
-          <div className="flex flex-col">
-            <span className="font-headline text-xl md:text-2xl font-bold leading-tight">
+          <div className="flex flex-col min-w-0">
+            <span className="font-headline text-base md:text-2xl font-bold leading-tight">
               United Methodist Youth Fellowship
             </span>
             <span className="text-xs md:text-sm text-muted-foreground font-medium">
@@ -79,7 +79,7 @@ export function Header() {
                     href="/"
                     className="mb-10 flex flex-col items-center space-y-2 self-center"
                   >
-                    <Image src={logo} alt="Christmas Institute Logo" width={64} height={64} className="h-16 w-16" />
+                    <Image src={logo} alt="Christmas Institute Logo" width={64} height={64} className="h-16 w-16 object-contain" />
                     <div className="text-center">
                       <span className="font-headline text-xl font-bold block">
                         Christmas Institute
