@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 
-import umcLogo from "@/images/umclogo.png";
+import logo from "@/images/logo.png";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from "@/lib/auth-context";
@@ -23,8 +23,8 @@ export function Header() {
         <Link href="/" className="mr-8 flex items-center space-x-3 group">
           <div className="relative">
             <Image 
-              src={umcLogo} 
-              alt="UMC Logo" 
+              src={logo} 
+              alt="Christmas Institute Logo" 
               width={56} 
               height={56} 
               className="h-12 w-12 md:h-14 md:w-14 transition-transform group-hover:scale-105" 
@@ -32,10 +32,10 @@ export function Header() {
           </div>
           <div className="flex flex-col">
             <span className="font-headline text-xl md:text-2xl font-bold leading-tight">
-              Christmas Institute
+              United Methodist Youth Fellowship
             </span>
             <span className="text-xs md:text-sm text-muted-foreground font-medium">
-              BANYUHAY 2025
+              Christmas Institute 2025
             </span>
           </div>
         </Link>
@@ -79,7 +79,7 @@ export function Header() {
                     href="/"
                     className="mb-10 flex flex-col items-center space-y-2 self-center"
                   >
-                    <Image src={umcLogo} alt="UMC Logo" width={64} height={64} className="h-16 w-16" />
+                    <Image src={logo} alt="Christmas Institute Logo" width={64} height={64} className="h-16 w-16" />
                     <div className="text-center">
                       <span className="font-headline text-xl font-bold block">
                         Christmas Institute

@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { MapPin, Heart, Shirt, Smartphone, Users, Moon, Smile, ShieldAlert, Sparkles, Package } from "lucide-react";
+import { MapPin, Heart, Shirt, Smartphone, Users, Moon, Smile, ShieldAlert, Sparkles, Package, Calendar, Clock, MapPinIcon, Backpack } from "lucide-react";
 
 const rules = [
   {
@@ -73,9 +73,79 @@ export function RulesSection() {
   return (
     <section id="rules" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-white/50 via-background to-background">
       <div className="container px-4 md:px-6">
+        {/* Know Before You Go Section */}
+        <div className="mx-auto max-w-6xl mb-16">
+          <div className="text-center mb-12">
+            <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
+               Know Before You Go 
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground">
+              Everything you need to know about Christmas Institute 2025
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mb-12">
+            {/* What */}
+            <div className="bg-card rounded-lg p-6 shadow-sm border">
+              <div className="flex items-center mb-4">
+                <Sparkles className="h-6 w-6 text-accent mr-3" />
+                <h3 className="font-semibold text-lg">What</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-2">Event:</p>
+              <p className="font-medium">Christmas Institute 2025</p>
+              <p className="text-accent font-semibold mt-2">BANYUHAY</p>
+              <p className="text-xs text-muted-foreground italic">Bagong Anyo ng Buhay</p>
+            </div>
+
+            {/* When */}
+            <div className="bg-card rounded-lg p-6 shadow-sm border">
+              <div className="flex items-center mb-4">
+                <Calendar className="h-6 w-6 text-primary mr-3" />
+                <h3 className="font-semibold text-lg">When</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-2">Dates:</p>
+              <p className="font-medium">December 26-30</p>
+              <p className="font-medium">2025</p>
+              <p className="text-xs text-muted-foreground mt-2">5 days of transformation</p>
+            </div>
+
+            {/* Where */}
+            <div className="bg-card rounded-lg p-6 shadow-sm border">
+              <div className="flex items-center mb-4">
+                <MapPinIcon className="h-6 w-6 text-red-500 mr-3" />
+                <h3 className="font-semibold text-lg">Where</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-2">Venue:</p>
+              <p className="font-medium text-sm leading-tight">St. Luke United Methodist Church</p>
+              <p className="text-xs text-muted-foreground mt-1">San Mariano, Roxas</p>
+              <p className="text-xs text-muted-foreground">Oriental Mindoro</p>
+            </div>
+
+            {/* What to Bring */}
+            <div className="bg-card rounded-lg p-6 shadow-sm border">
+              <div className="flex items-center mb-4">
+                <Backpack className="h-6 w-6 text-green-600 mr-3" />
+                <h3 className="font-semibold text-lg">What to Bring</h3>
+              </div>
+              <div className="space-y-1 text-sm">
+                <p>• Registration fee</p>
+                <p>• Bigas (Rice)</p>
+                <p>• Hygiene Essentials</p>
+                <p>• Eating Utensils</p>
+                <p>• Beddings</p>
+                <p>• Tumbler</p>
+                <p>• Notebook & Ballpen</p>
+                <p>• Bible</p>
+                <p>• T-shirt (optional)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Rules Section */}
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            🦋 CI CAMP RULES 🦋
+             CI CAMP RULES 
           </h2>
           <p className="mt-4 text-lg md:text-xl font-semibold">
             Para Masaya, Safe, at Solid ang Camp Experience!
